@@ -1,0 +1,57 @@
+#authorize_button{
+    background-color: #dddddd;
+    border:none;
+    color:blue;
+    font-size:16px;
+    padding: 12px 24px;
+    margin:5px;
+    border-radius:14px;
+    outline:none;
+    cursor: pointer;
+}
+
+#signout_button{
+    background-color: #dddddd;
+    border:none;
+    color:blue;
+    font-size:16px;
+    padding: 12px 24px;
+    margin:5px;
+    border-radius:14px;
+    outline:none;
+    cursor: pointer;
+}
+
+#student_button{
+    background-color: #FFFFFF;
+    border:none;
+    color:#000000;
+    font-size:16px;
+    padding: 12px 24px;
+    margin:5px;
+    border-radius:14px;
+    outline:none;
+    width: 285px;
+    height: 123px;
+    left: 409px;
+    top: 389px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+#professor_button{
+    background-color: #000000;
+    border:none;
+    color:#FFFFFF;
+    font-size:16px;
+    padding: 12px 24px;
+    margin:5px;
+    border-radius:14px;
+    outline:none;
+    width: 285px;
+    height: 123px;
+    left: 409px;
+    top: 389px;
+    border-style: solid;
+    cursor: pointer;
+}
