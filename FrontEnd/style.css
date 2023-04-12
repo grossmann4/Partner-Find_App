@@ -50,8 +50,35 @@
     outline:none;
     width: 285px;
     height: 123px;
-    left: 409px;
-    top: 389px;
+    border-style: solid;
+    cursor: pointer;
+}
+
+#class_name, #group_size, #email{
+    background-color: #FFFFFF;
+    border:none;
+    color:#000000;
+    font-size:16px;
+    padding: 12px 24px;
+    margin:5px;
+    border-radius:14px;
+    outline:none;
+    width: 200px;
+    height: 35px;
+    border-style: solid;
+}
+
+#next_button, #finish_button{
+    background-color: #000000;
+    border: none;
+    color: #FFFFFF;
+    font-size: 16px;
+    padding: 8px 24px;
+    margin: 5px;
+    border-radius: 14px;
+    outline: none;
+    width: 200px;
+    height: 35px;
     border-style: solid;
     cursor: pointer;
 }

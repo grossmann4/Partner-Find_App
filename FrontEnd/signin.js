@@ -9,10 +9,11 @@ const API_KEY = 'AIzaSyAObYDNWVXQ699vmLFuWVq4WR-TUN-0SCE';
 
 // Discovery doc URL for APIs used by the quickstart
 const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest';
+const DISCOVERY_DOC2 = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly';
+const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar.readonly';
 
 let tokenClient;
 let gapiInited = false;
@@ -35,7 +36,7 @@ function gapiLoaded() {
 async function initializeGapiClient() {
     await gapi.client.init({
     apiKey: API_KEY,
-    discoveryDocs: [DISCOVERY_DOC],
+    discoveryDocs: [DISCOVERY_DOC,DISCOVERY_DOC2],
     });
     gapiInited = true;
     maybeEnableButtons();
@@ -72,7 +73,7 @@ function handleAuthClick() {
         throw (resp);
     }
     document.getElementById('signout_button').style.visibility = 'visible';
-    document.getElementById('authorize_button').innerText = 'Refresh';
+    document.getElementById('authorize_button').style.visibility = 'hidden';
     await showButtons();
     };
 
@@ -95,7 +96,8 @@ function handleSignoutClick() {
     google.accounts.oauth2.revoke(token.access_token);
     gapi.client.setToken('');
     document.getElementById('content').innerText = '';
-    document.getElementById('authorize_button').innerText = 'Authorize';
+    document.getElementById('authorize_button').innerText = 'Sign in';
+    document.getElementById('authorize_button').style.visibility = 'visible';
     document.getElementById('signout_button').style.visibility = 'hidden';
     }
 }
@@ -105,7 +107,7 @@ function handleSignoutClick() {
  */
 async function showButtons() {
 
-    document.getElementById('content').innerHTML = "<div>I Am A</div> <br>";
+    document.getElementById('content').innerHTML = "<div id=\"iama\"  style=\"font-size:30px\">I Am A</div> <br>";
 
     var button = document.createElement("button");
   
@@ -124,4 +126,122 @@ async function showButtons() {
     button2.textContent = "Professor";
 
     document.getElementById('content').appendChild(button2);
+
+    // add event listener to student button
+    button.addEventListener("click", function() {
+        showStudentContent(); 
+    });
+    // add event listener to professor button
+    button2.addEventListener("click", function() {
+        showProfessorContent(); 
+    });
+}
+
+// Professor content
+async function showProfessorContent() {
+    // create header
+    var header = document.createElement("h1");
+    header.setAttribute("id", "header");
+    header.textContent = "Create Class";
+
+    // create input fields for class name and group size
+    var input1 = document.createElement("input");
+    input1.setAttribute("id", "class_name");
+    input1.setAttribute("type", "text");
+    input1.setAttribute("placeholder", "Enter your class name");
+    
+    // create line break
+    var lineBreak = document.createElement("br");
+
+    var input2 = document.createElement("input");
+    input2.setAttribute("id", "group_size");
+    input2.setAttribute("type", "text");
+    input2.setAttribute("placeholder", "Enter max group size");
+
+    var lineBreak2 = document.createElement("br");
+    var button = document.createElement("button");
+    // set the button's id attribute
+    button.setAttribute("id", "next_button");
+    // set the button's text content
+    button.textContent = "Next";
+
+    // hide the buttons and show the input fields
+    document.getElementById('iama').style.display = "none";
+    document.getElementById('student_button').style.display = "none";
+    document.getElementById('professor_button').style.display = "none";
+
+    // add elements to the content div
+    document.getElementById('content').appendChild(header);
+    document.getElementById('content').appendChild(input1);
+    document.getElementById('content').appendChild(lineBreak);
+    document.getElementById('content').appendChild(input2);
+    document.getElementById('content').appendChild(lineBreak2);
+    document.getElementById('content').appendChild(button);
+
+    // add event listener to button2
+    button.addEventListener("click", function() {
+        createSuccessfulPage(); 
+    });
+}
+
+async function createSuccessfulPage() {
+    document.getElementById('header').textContent = "Class Created Successfully";
+    document.getElementById('class_name').style.display = "none";
+    document.getElementById('group_size').style.display = "none";
+    document.getElementById('next_button').textContent = "INVITE STUDENT";
+    document.getElementById('next_button').addEventListener("click", function() {
+        invitePage(); 
+    });
+}
+
+async function invitePage() {
+    
+    var input1 = document.createElement("input");
+    input1.setAttribute("id", "email");
+    input1.setAttribute("type", "text");
+    input1.setAttribute("placeholder", "Enter student email");
+
+    var lineBreak = document.createElement("br");
+    var button = document.createElement("button");
+    // set the button's id attribute
+    button.setAttribute("id", "finish_button");
+    // set the button's text content
+    button.textContent = "FINISHED";
+
+    document.getElementById('header').textContent = "Invite Students";
+    document.getElementById('next_button').textContent = "ENTER";
+    document.getElementById('content').appendChild(input1);
+    document.getElementById('content').appendChild(lineBreak);
+    document.getElementById('content').appendChild(button);
+
+    button.addEventListener("click", function() {
+        showButtons(); 
+    });
+}
+
+
+async function showStudentContent() {
+    var header = document.createElement("h1");
+    header.setAttribute("id", "header");
+    header.textContent = "This is your calendar:";
+    
+    const user = await gapi.client.gmail.users.getProfile({ 'userId': 'me' }); // Get user profile
+    const userEmail = user.result.emailAddress; // Extract user email from profile
+
+    var email = document.createElement("iframe");
+    email.setAttribute("id", "calendar");
+    email.setAttribute("src", "https://calendar.google.com/calendar/embed?src=" + encodeURIComponent(userEmail) + "&ctz=America%2FNew_Yorkk&mode=week");
+    email.style.border = "0";
+    email.width = "800";
+    email.height = "600";
+
+
+    // hide the buttons and show the input fields
+    document.getElementById('iama').style.display = "none";
+    document.getElementById('student_button').style.display = "none";
+    document.getElementById('professor_button').style.display = "none";
+
+    document.getElementById('content').appendChild(header);
+    document.getElementById('content').appendChild(email);
+
 }
