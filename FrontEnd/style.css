@@ -68,7 +68,7 @@
     border-style: solid;
 }
 
-#next_button, #finish_button{
+#next_button, #finish_button, #enter_button{
     background-color: #000000;
     border: none;
     color: #FFFFFF;

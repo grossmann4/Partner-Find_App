@@ -155,7 +155,7 @@ async function showProfessorContent() {
 
     var input2 = document.createElement("input");
     input2.setAttribute("id", "group_size");
-    input2.setAttribute("type", "text");
+    input2.setAttribute("type", "number");
     input2.setAttribute("placeholder", "Enter max group size");
 
     var lineBreak2 = document.createElement("br");
@@ -180,7 +180,17 @@ async function showProfessorContent() {
 
     // add event listener to button2
     button.addEventListener("click", function() {
-        createSuccessfulPage(); 
+        var name = document.getElementById("class_name").value;
+        var size = document.getElementById("group_size").value;
+        if (name)
+            if (Number(size) >= 2) {
+                // API call for creating a class
+                createSuccessfulPage();        
+                }
+            else
+                alert("Enter a valid class size greater than 1.")
+        else
+            alert("Enter a valid class name.");
     });
 }
 
@@ -208,11 +218,26 @@ async function invitePage() {
     // set the button's text content
     button.textContent = "FINISHED";
 
+    var enter_button = document.createElement("button");
+    enter_button.setAttribute("id", "enter_button");
+    enter_button.textContent = "ENTER";
+
     document.getElementById('header').textContent = "Invite Students";
-    document.getElementById('next_button').textContent = "ENTER";
+    document.getElementById('next_button').style.display = "none";
+    document.getElementById('content').appendChild(enter_button);
     document.getElementById('content').appendChild(input1);
     document.getElementById('content').appendChild(lineBreak);
     document.getElementById('content').appendChild(button);
+
+    enter_button.addEventListener("click", function() {
+        var text = document.getElementById("email").value;
+        if (text) {
+            //api call for sending out email
+            document.getElementById('email').value = ''; 
+        }
+        else
+            alert("Enter a valid email.");
+    })
 
     button.addEventListener("click", function() {
         showButtons(); 
