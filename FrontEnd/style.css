@@ -82,3 +82,18 @@
     border-style: solid;
     cursor: pointer;
 }
+
+#Yes, #No, #submit, #return{
+    background-color: #000000;
+    border: none;
+    color: #FFFFFF;
+    font-size: 16px;
+    padding: 8px 24px;
+    margin: 5px;
+    border-radius: 14px;
+    outline: none;
+    width: 200px;
+    height: 35px;
+    border-style: solid;
+    cursor: pointer;
+}

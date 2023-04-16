@@ -219,11 +219,71 @@ async function invitePage() {
     });
 }
 
+async function yesButton() {
+    document.getElementById('header').textContent = "Create Profile";
+
+    var input2 = document.createElement("textarea");
+    input2.setAttribute("id", "AboutMe");
+    input2.setAttribute("rows", "10");
+    input2.setAttribute("cols", "50");
+    input2.setAttribute("type", "text");
+    input2.setAttribute("placeholder", "About Me");
+
+    var lineBreak = document.createElement("br");
+
+    
+
+    var groupInput = document.createElement("textarea")
+    groupInput.setAttribute("id", "group");
+    groupInput.setAttribute("rows", "5");
+    groupInput.setAttribute("cols", "50");
+    groupInput.setAttribute("type", "text");
+    groupInput.setAttribute("placeholder", "Group Members Ex: jd9998, jd9999");
+
+    
+
+    var button = document.createElement("button");
+    button.setAttribute("id", "submit");
+    button.textContent = "Submit";
+    
+   
+    document.getElementById("calendar").style.display = 'none';
+    document.getElementById("Yes").style.display = 'none';
+    document.getElementById("No").style.display = 'none';
+    document.getElementById('content').appendChild(input2);
+    document.getElementById('content').appendChild(lineBreak);
+    var newDiv = document.createElement("div");
+    newDiv.appendChild(groupInput);
+    newDiv.appendChild(lineBreak);
+    newDiv.appendChild(button);
+    document.getElementById('content').appendChild(newDiv);
+
+button.addEventListener("click", function() {
+    submitProfile();
+})
+}
+
+async function noButton() {
+    document.getElementById('header').textContent = "Finalize Your Calendar and then Click Return";
+
+    var returnButton = document.createElement("button");
+    returnButton.setAttribute("id", "return");
+    returnButton.textContent = "Return";
+
+    document.getElementById("calendar").style.display = 'none';
+    document.getElementById("Yes").style.display = 'none';
+    document.getElementById("No").style.display = 'none';
+    document.getElementById("content").appendChild(returnButton);
+
+    returnButton.addEventListener("click", function() {
+        showStudentContent();
+    })
+}
 
 async function showStudentContent() {
     var header = document.createElement("h1");
     header.setAttribute("id", "header");
-    header.textContent = "This is your calendar:";
+    header.textContent = "Is this the correct calendar?";
     
     const user = await gapi.client.gmail.users.getProfile({ 'userId': 'me' }); // Get user profile
     const userEmail = user.result.emailAddress; // Extract user email from profile
@@ -235,6 +295,14 @@ async function showStudentContent() {
     email.width = "800";
     email.height = "600";
 
+    var lineBreak = document.createElement("br");
+    var button = document.createElement("button");
+    button.setAttribute("id", "Yes");
+    button.textContent = "Yes";
+
+    var button2 = document.createElement("button")
+    button2.setAttribute("id", "No");
+    button2.textContent = "No";
 
     // hide the buttons and show the input fields
     document.getElementById('iama').style.display = "none";
@@ -243,5 +311,18 @@ async function showStudentContent() {
 
     document.getElementById('content').appendChild(header);
     document.getElementById('content').appendChild(email);
+    document.getElementById('content').appendChild(lineBreak);
+    document.getElementById('content').appendChild(button);
+    document.getElementById('content').appendChild(button2);
+
+    button.addEventListener("click", function() {
+        yesButton();
+    })
+
+    button2.addEventListener("click", function() {
+        noButton();
+    })
 
 }
+
+// TODO: fix buttons and create pages for yes and no
