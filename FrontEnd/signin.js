@@ -4,8 +4,8 @@
 /* exported handleSignoutClick */
 
 // TODO(developer): Set to client ID and API key from the Developer Console
-const CLIENT_ID = '144547975092-aokig3tlqrbt2pqhidprf0m8f1gadp12.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyAObYDNWVXQ699vmLFuWVq4WR-TUN-0SCE';
+const CLIENT_ID = '910600019466-8pj2hicq71f958dabgcbbmjqugemt142.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyBiP9r7GmEcISKZzB4X1j-vR2EEiqwWuFQ';
 
 // Discovery doc URL for APIs used by the quickstart
 const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest';
